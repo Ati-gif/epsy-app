@@ -10,10 +10,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_02_163113) do
+ActiveRecord::Schema.define(version: 2021_06_22_233149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "buyers", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "desired_categories"
+    t.float "max_price"
+    t.bigint "seller_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["seller_id"], name: "index_buyers_on_seller_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.float "price"
+    t.text "description"
+    t.bigint "seller_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["seller_id"], name: "index_items_on_seller_id"
+  end
+
+  create_table "merches", force: :cascade do |t|
+    t.float "price"
+    t.text "description"
+    t.string "category"
+    t.bigint "seller_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["seller_id"], name: "index_merches_on_seller_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.float "price"
+    t.boolean "sold"
+    t.float "sold_price"
+    t.bigint "seller_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["seller_id"], name: "index_products_on_seller_id"
+  end
+
+  create_table "sellers", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "things", force: :cascade do |t|
     t.string "name"
@@ -21,4 +68,33 @@ ActiveRecord::Schema.define(version: 2021_06_02_163113) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "provider", default: "email", null: false
+    t.string "uid", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.boolean "allow_password_change", default: false
+    t.datetime "remember_created_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.string "name"
+    t.string "nickname"
+    t.string "image"
+    t.string "email"
+    t.json "tokens"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
+  end
+
+  add_foreign_key "buyers", "sellers"
+  add_foreign_key "items", "sellers"
+  add_foreign_key "merches", "sellers"
+  add_foreign_key "products", "sellers"
 end

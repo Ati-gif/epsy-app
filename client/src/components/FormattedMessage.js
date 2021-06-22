@@ -1,37 +1,49 @@
-import React, {useState} from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
-import { ALERT_BACKGROUND, ALERT_TEXT_COLOR, BORDER_RADIUS, NOTIFY_BACKGROUND, NOTIFY_TEXT_COLOR, PADDING2_EVEN_LARGE, WARN_BACKGROUND, WARN_TEXT_COLOR } from '../styles'
+import { ALERT_BACKGROUND, ALERT_TEXT_COLOR, BORDER_RADIUS, NOTIFY_BACKGROUND, NOTIFY_TEXT_COLOR, PADDING, PADDING2_EVEN_LARGE, WARN_BACKGROUND, WARN_TEXT_COLOR } from '../styles'
+import Fade from './Fade'
 
-const getColor = (type) => {
-    if (type ===  'alert') return ALERT_TEXT_COLOR
-    if (type ===  'warn') return WARN_TEXT_COLOR
-    return NOTIFY_TEXT_COLOR
+// <FormatedMessage type='alert'
+const getTextColor = (props) =>{
+    if(props.type === 'alert'){
+        return ALERT_TEXT_COLOR
+    } else if(props.type === 'warn'){
+        return WARN_TEXT_COLOR
+    } else {
+        return NOTIFY_TEXT_COLOR
+    }
 }
 
-const getBackgroundColor = (type) => {
-    if (type ===  'alert') return ALERT_BACKGROUND
-    if (type ===  'warn') return WARN_BACKGROUND
-    return NOTIFY_BACKGROUND
+const getBackgroundColor = (props) =>{
+    if(props.type === 'alert'){
+        return ALERT_BACKGROUND
+    } else if(props.type === 'warn'){
+        return WARN_BACKGROUND
+    } else {
+        return NOTIFY_BACKGROUND
+    }
 }
 
-const FormattedMessageContainer = styled.div`
-    color: ${props => getColor(props.type)};
-    background: ${props => getBackgroundColor(props.type)};;
-    border: 2px solid ${props => getColor(props.type)};
-    padding: ${PADDING2_EVEN_LARGE};
-    border-radius: ${BORDER_RADIUS}; 
+export const FormattedMessageWrapper = styled.div`
+  color: ${(props) =>  getTextColor(props)};
+    border: 2px solid ${(props) => !props.noBackground ? getTextColor(props) : 'white'};
+    background: ${(props) => !props.noBackground ? getBackgroundColor(props) : 'white'};
+    border-radius: ${BORDER_RADIUS};
+    padding: ${ (props) => !props.noBackground ? PADDING2_EVEN_LARGE: '0px'}
 `
 
-const FormattedMessage = (props) => {
-    const [hide, setHide] = useState(false)
-    if(hide) return null
-    return (
-        <FormattedMessageContainer type={props.type}>
-            <div style={{display:"flex", justifyContent:'space-between'}}>
-                {props.children}
-                <span onClick={()=> setHide(true)}>x</span> 
-            </div>
-        </FormattedMessageContainer>
+const FormattedMessage = (props) =>{
+    const {children, type} = props
+    const [hide,setHide] = useState(false)
+    return(
+      <Fade hide= {hide}>
+        <FormattedMessageWrapper type={type}>
+           <div style={{display: 'flex', justifyContent:'space-between'}}>
+             {children}
+             <span onClick={()=>setHide(true)}> X Icon</span>
+           </div>
+        </FormattedMessageWrapper>
+      </Fade>
     )
 }
 

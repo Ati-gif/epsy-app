@@ -1,3 +1,5 @@
+// change these whenever
+
 export const PRIMARY_COLOR = 'steelblue';
 export const TEXT_COLOR = 'black';
 export const INV_TEXT_COLOR = 'white';

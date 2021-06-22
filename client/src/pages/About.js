@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from 'react'
-
-const About = () => {
-    return (
-        <div>
-            <h1>About</h1>
-        </div>
-    )
-} 
+import React from 'react'
+class About extends React.Component {
+    render() {
+        return (
+            <>
+                <h1>About</h1>
+            </>
+        )
+    }
+}
 
 export default About
