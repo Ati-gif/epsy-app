@@ -22,7 +22,6 @@ const Categories = () => {
 
   const [merch, setMerch] = useState([])
 
-  //variable, if user selects "all" for category it will render category under item desc/price
   const [showCategories, setShowCategories] = useState(true)
 
   const handleChange =  async (e, {value}) => {
@@ -35,7 +34,7 @@ const Categories = () => {
       }
       else{
         //user has selected "All", set showCategories to true and render categories in the cards
-        let res = await axios.get('api/merchandises')
+        let res = await axios.get('api/merches')
         setMerch(res.data)
         setShowCategories(true)
       }
