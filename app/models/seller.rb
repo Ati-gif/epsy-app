@@ -1,4 +1,4 @@
 class Seller < ApplicationRecord
   has_many :buyers
-  has_many :items
+  has_many :merches
 end

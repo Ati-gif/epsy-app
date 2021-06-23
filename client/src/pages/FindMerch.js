@@ -5,11 +5,11 @@ import axios from 'axios'
 const FindMerch = () => {
   //set chosen category so we only have to make 1 axios call, in onSellerChange fn.
   const [chosenCategory, setChosenCategory] = useState(null)
-  const [merch, setMerch] = useState([])
+  const [merches, setMerches] = useState([])
   const [sellers, setSellers] = useState([])
 
   const [categories, setCategories] = useState([
-    // {key: 'All', text: 'All Products', value: 'All'},
+    // {key: 'All', text: 'All Merchandies', value: 'All'},
     {key: 'Accessories', text: 'Accessories', value: 'Accessories'},
     {key:'Apparel', text: 'Apparel', value: 'Apparel'},
     {key: 'Home', text: 'Home', value: 'Home'},
@@ -34,8 +34,8 @@ const FindMerch = () => {
   //get products based on Category and Seller
   const onSellerChange = async (e, {value}) => {
   try{
-    let res = await axios.get(`/api/merchandises/${chosenCategory}/${value}`)
-    setMerch(res.data)
+    let res = await axios.get(`/api/merches/${chosenCategory}/${value}`)
+    setMerches(res.data)
   }catch(err){
     alert(err)
   }
@@ -56,10 +56,10 @@ const FindMerch = () => {
     }
 
   //render card for each product from onSellerChange axios call
-  const renderMerch = () => {
+  const renderMerches = () => {
     return(
       <Card.Group style={{marginTop: '20px'}}>
-        {merch.map( m => (
+        {merches.map( m => (
           <>
           <Card style={{padding: '10px'}}>
             <Card.Header>
@@ -82,7 +82,7 @@ return (
     {sellers.length !== 0 ? (
       <>
       <div>
-        <h1>Find Merch</h1>
+        <h1>Find Merchandise</h1>
       </div>
       <div>
         <Dropdown
@@ -105,7 +105,7 @@ return (
       </div>
       </>
     ) : (<h1>"loading"</h1>)}
-    {renderMerch()}
+    {renderMerches()}
   </>
 )
 }
