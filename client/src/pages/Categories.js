@@ -20,7 +20,7 @@ const Categories = () => {
     {key:'Toys', text: 'Toys', value: 'Toys'}
   ])
 
-  const [merch, setMerch] = useState([])
+  const [merches, setMerches] = useState([])
 
   const [showCategories, setShowCategories] = useState(true)
 
@@ -29,13 +29,13 @@ const Categories = () => {
       //if user selects a specific category, set showCategories to false and hide categories form cards rendered
       if(value != 'All'){
         let res =  await axios.get(`/api/categories/${value}`)
-        setMerch(res.data)
+        setMerches(res.data)
         setShowCategories(false)
       }
       else{
         //user has selected "All", set showCategories to true and render categories in the cards
         let res = await axios.get('api/merches')
-        setMerch(res.data)
+        setMerches(res.data)
         setShowCategories(true)
       }
       
@@ -44,10 +44,10 @@ const Categories = () => {
     }
   }
 
-  const renderMerch = () => {
+  const renderMerches = () => {
     return(
       <Card.Group style={{marginTop: '20px'}}>
-        {merch.map( m => (
+        {merches.map( m => (
           <>
           <Card style={{padding: '10px'}}>
             <Card.Header>
@@ -76,8 +76,8 @@ const Categories = () => {
         selection
         options={categories}
       />
-      {merch && renderMerch()}
-      {!merch && <p>No Merchandise available</p>}
+      {merches && renderMerches()}
+      {!merches && <p>No Merchandise available</p>}
     </div>
   )
   

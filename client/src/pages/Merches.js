@@ -34,7 +34,7 @@ const Merches = () => {
         return { description, price, category, merch_id };
       });
 
-      let detail = { seller_id, name, email, merchess: sellerMerches, };
+      let detail = { seller_id, name, email, merches: sellerMerches, };
 
       sellerArray.push(detail);
     });

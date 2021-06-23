@@ -10,7 +10,7 @@ import FetchUser from './components/FetchUser'
 import ProtectedRoute from './components/ProtectedRoute'
 import Merches from './pages/Merches';
 import Categories from './pages/Categories';
-import FindMerch from './pages/FindMerch';
+import FindMerches from './pages/FindMerches';
 
 const App = () => (
   <Fragment>
@@ -23,7 +23,7 @@ const App = () => (
           <Route exact path="/register" component={Register} />
           <Route exact path="/merches" component={Merches} />
           <Route exact path="/categories" component={Categories} />
-          <Route exact path="/FindMerch" component={FindMerch} />
+          <Route exact path="/FindMerches" component={FindMerches} />
           <Route component={NoMatch} />
         </Switch>
       </Container>

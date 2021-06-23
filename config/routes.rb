@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   namespace :api do
-    get 'merchandises', to: 'merchandises#index'
-    get 'categories', to: 'merchandises#categories_index'
-    get 'categories/:category', to: 'merchandises#category'
-    get 'merchandises/:category/:seller_id', to: 'merchandises#merchandises_find'
+    get 'merches', to: 'merches#index'
+    get 'categories', to: 'merches#categories_index'
+    get 'categories/:category', to: 'merches#category'
+    get 'merches/:category/:seller_id', to: 'merches#merches_find'
 
     resources :sellers 
   end

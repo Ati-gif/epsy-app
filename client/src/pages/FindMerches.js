@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Card, Dropdown } from 'semantic-ui-react'
 import axios from 'axios'
 
-const FindMerch = () => {
+const FindMerches = () => {
   //set chosen category so we only have to make 1 axios call, in onSellerChange fn.
   const [chosenCategory, setChosenCategory] = useState(null)
   const [merches, setMerches] = useState([])
@@ -110,4 +110,4 @@ return (
 )
 }
 
-export default FindMerch
+export default FindMerches
