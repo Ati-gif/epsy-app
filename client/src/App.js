@@ -1,34 +1,39 @@
-import React, { Fragment, } from 'react';
-import NavBar from './components/NavBar';
-import Home from './components/Home';
-import NoMatch from './components/NoMatch';
-import Login from './components/Login';
-import Register from './components/Register';
-import { Switch, Route, } from 'react-router-dom';
-import { Container, } from "semantic-ui-react";
-import FetchUser from './components/FetchUser'
-import ProtectedRoute from './components/ProtectedRoute'
-import Merches from './pages/Merches';
-import Categories from './pages/Categories';
-import FindMerches from './pages/FindMerches';
+import "./App.css";
+import { Route, Switch } from "react-router-dom";
+import Home from "./Demo/Home";
+import NoMatch from "./components/NoMatch";
+import NavBar from "./components/NavBar";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import { Container } from "semantic-ui-react";
+import FetchBuyer from "./components/FetchBuyer";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Available from "./components/Available";
+import AvailableCustom from "./components/AvailableCustom";
+import FindMerch from "./components/FindMerch";
+import Categories from "./components/Categories";
 
-const App = () => (
-  <Fragment>
-    <NavBar />
-    <FetchUser>
-      <Container>
-        <Switch>
-          <ProtectedRoute exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/merches" component={Merches} />
-          <Route exact path="/categories" component={Categories} />
-          <Route exact path="/FindMerches" component={FindMerches} />
-          <Route component={NoMatch} />
-        </Switch>
-      </Container>
-    </FetchUser>
-  </Fragment>
-)
+function App() {
+  return (
+    <>
+      <NavBar />
+      <FetchBuyer>
+        <Container>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/available" component={Available} />
+            <Route exact path='/available_custom' component={AvailableCustom} />
+            <Route exact path='/categories' component={Categories} />
+            <Route exact path ='/find_merch' component={FindMerch} />
+            <Route component={NoMatch} />
+          </Switch>
+        </Container>
+      </FetchBuyer>
+    </>
+  );
+}
 
 export default App;
+

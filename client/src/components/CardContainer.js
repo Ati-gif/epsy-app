@@ -11,4 +11,3 @@ const CardContainer = styled.div`
 `
 
 export default CardContainer
-

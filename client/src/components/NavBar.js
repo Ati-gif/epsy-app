@@ -1,93 +1,51 @@
-import React from 'react'
-import { AuthConsumer, } from "../providers/AuthProvider";
-import { Menu, } from 'semantic-ui-react'
-import { Link, withRouter, } from 'react-router-dom'
+import { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Menu } from "semantic-ui-react";
+import { AuthContext } from "../providers/AuthProvider";
 
-class Navbar extends React.Component {
-  
-  rightNavItems = () => {
-    const { auth: { user, handleLogout, }, location, } = this.props;
-    
-    if (user) {
+export default (props) => {
+  const history = useHistory();
+  const { authenticated, handleLogout } = useContext(AuthContext);
+
+  const rightNavItems = () => {
+    if (authenticated) {
       return (
-        <Menu.Menu position='right'>
-          <Menu.Item
-            name='logout'
-            onClick={ () => handleLogout(this.props.history) }
-          />
-        </Menu.Menu>
-      )
+        <>
+          <Menu.Item name="logout" onClick={() => handleLogout(history)} />
+        </>
+      );
     } else {
       return (
-        <Menu.Menu position='right'>
-          <Link to='/login'>
-            <Menu.Item
-              id='login'
-              name='login'
-              active={location.pathname === '/login'}
-            />
+        <>
+          <Link to="/login">
+            <Menu.Item id="login" name="login">
+              Login
+            </Menu.Item>
           </Link>
-          <Link to='/register'>
-            <Menu.Item
-              id='register'
-              name='register'
-              active={location.pathname === '/register'}
-            />
+          <Link to="/register">
+            <Menu.Item id="Register" name="register">
+              Register
+            </Menu.Item>
           </Link>
-        </Menu.Menu>
-      )
+        </>
+      );
     }
-  }
-  
-  render() {
-    return (
-      <div>
-        <Menu pointing secondary>
-          <Link to='/'>
-            <Menu.Item
-              name='home'
-              id='home'
-              active={this.props.location.pathname === '/'}
-            />
-            </Link>
-            <Link to='/merches'>
-            <Menu.Item
-              name='merchandise'
-              id='merches'
-              active={this.props.location.pathname === '/merches'}
-            />
-          </Link>
-          <Link to='/categories'>
-            <Menu.Item
-              name='categories'
-              id='categories'
-              active={this.props.location.pathname === '/categories'}
-            />
-          </Link>
-          <Link to='/FindMerches'>
-            <Menu.Item
-              name='Available merchandise'
-              id='Available merchandise'
-              active={this.props.location.pathname === '/FindMerches'}
-            />
-          </Link>
-            { this.rightNavItems() }
-        </Menu>
-      </div>
-    )
-  }
-}
-
-export class ConnectedNavbar extends React.Component {
-  render() {
-    return (
-      <AuthConsumer> 
-        { auth => 
-          <Navbar { ...this.props } auth={auth} />
-        }
-      </AuthConsumer>
-    )
-  }
-}
-
-export default withRouter(ConnectedNavbar);
+  };
+  return (
+    <Menu>
+      <Link to="/">
+        <Menu.Item>Epsy</Menu.Item>
+      </Link>
+      <Link to="/available_custom">
+        <Menu.Item>Available</Menu.Item>
+      </Link>
+      <Link to='/categories'>
+      <Menu.Item>Categories</Menu.Item>
+      </Link>
+      <Link to='/find_merch'>
+      <Menu.Item>Find Merchandise</Menu.Item>
+      </Link>
+      <Menu.Menu position="right">{rightNavItems()}</Menu.Menu>
+    </Menu>
+  );
+};
