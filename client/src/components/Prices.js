@@ -7,16 +7,25 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 const apiDummyData = [
     {merch: 'Toys', prices: "123234,23412,2134123"},
     {merch: 'Accessories', prices: "223234,23412,134123"},
-]
+    {merch: 'Home', prices: "123234,23412,2134123"},
+    {merch: 'Living', prices: "223234,23412,134123"},
+    {merch: 'Wedding', prices: "123234,23412,2134123"},
+    {merch: 'Entertainment', prices: "223234,23412,134123"},
+    {merch: 'Crafts', prices: "123234,23412,2134123"},
+    ]
 
 // This is how recharts needs it
 const dummyData =   [
     { name: "Toys", price: 500000 },
     { name: "Accessories", price: 250000 },
+    { name: "Home", price: 100000 },
+    { name: "Living", price: 350000 },
+    { name: "Wedding", price: 200000 },
+    { name: "Entertainment", price: 150000 },
+    { name: "Crafts", price: 300000 },
   ]
 
-
-  const MerchCost = () =>{
+  const Prices = () =>{
       const [prices, setPrices] = useState(null)
       useEffect(()=>{
           getPrices()
@@ -35,7 +44,7 @@ const dummyData =   [
         const getPrices = async () => {
         try{
             // TODO: hookup to actual API
-            let res = await axios.get('/api/merches/merch_cost')
+            let res = await axios.get('/api/merches/prices')
             // since api is not hook we will not get here instead goes
             // to catch block
             const formattedData =  normalizeChartData(res.data)
@@ -69,4 +78,4 @@ const dummyData =   [
     )
 }
 
-export default MerchCost
+export default Prices
