@@ -4,7 +4,7 @@ import { AuthContext } from "../providers/AuthProvider";
 
 export default (props) => {
   //init register values
-  const [email, setEmail] = useState("test@test.com");
+  const [email, setEmail] = useState("test@gmail.com");
   const [password, setPassword] = useState("123456");
   const [confirmPassword, setConfirmPassword] = useState("123456");
   const [name, setName] = useState("");
