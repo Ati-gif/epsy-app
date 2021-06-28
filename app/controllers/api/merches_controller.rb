@@ -2,8 +2,7 @@ class Api::MerchesController < ApplicationController
   before_action :set_page
 
   def index
-    merches= Merch.page(@page).available
-    render json: { merches: merches, total_pages: merches.total_pages }
+    render json: Merch.available
   end
 
   
@@ -22,6 +21,10 @@ class Api::MerchesController < ApplicationController
     render json: Merch.merches_find(category, seller_id)
     end
     
+    def merch_cost
+      render json: Merch.cost_by_category
+    end
+
   private
   def set_page
     @page = params[:page] || 1

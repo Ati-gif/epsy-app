@@ -36,7 +36,7 @@ export default (props) => {
       <Link to="/">
         <Menu.Item>Epsy</Menu.Item>
       </Link>
-      <Link to="/available_custom">
+      <Link to="/available">
         <Menu.Item>Available</Menu.Item>
       </Link>
       <Link to='/categories'>
@@ -46,7 +46,7 @@ export default (props) => {
       <Menu.Item>Find Merchandise</Menu.Item>
       </Link>
       <Link to='/merch_cost'>
-      <Menu.Item>Merchandise Cost</Menu.Item>
+      <Menu.Item>Merchandise Price</Menu.Item>
       </Link>
       <Menu.Menu position="right">{rightNavItems()}</Menu.Menu>
     </Menu>

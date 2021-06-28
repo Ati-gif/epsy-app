@@ -1,72 +1,72 @@
-import React from 'react';
 import axios from 'axios';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import React, {useState, useEffect} from 'react'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 
-const colors = [
-  '#8884d8',
-  '#93FD93',
-  '#2493FD',
-  '#FF00DD',
-  '#DD00FF',
-  '#00FFD3',
-  '#1279D0',
-  '#D01279',
-  '#939393'
+
+// This is what my data is going to look like coming back from API
+const apiDummyData = [
+    {merch: 'Toys', prices: "123234,23412,2134123"},
+    {merch: 'Accessories', prices: "223234,23412,134123"},
 ]
 
-class MerchCost extends React.Component {
-  state = { merches: [] }
-
-  componentDidMount() {
-    axios.get('/api/merches/merch_cost')
-      .then( res => this.setState({ merches: res.data }) )
-  }
-
-  calcAvg = (prices, price) => {
-    let sum = prices.split(', ').reduce( (total, num) => {
-      return parseFloat(num) + total;
-    }, 0);
+// This is how recharts needs it
+const dummyData =   [
+    { name: "Toys", price: 500000 },
+    { name: "Accessories", price: 250000 },
+  ]
 
 
-    return sum / price
-  }
+  const MerchCost = () =>{
+      const [prices, setPrices] = useState(null)
+      useEffect(()=>{
+          getPrices()
+        },[])
+        
+        const normalizeChartData = (apiData) => {
+            return apiData.map( merchData => {
+                let pricesArray = merchData.prices.split(',')
+                let sum = pricesArray.reduce((acumm, thing) => acumm += parseInt(thing), 0)
+                let average = sum/pricesArray.length
+          
+                return {name: merchData.merch, price: average.toFixed(2)}
+            })
+        } 
+        
+        const getPrices = async () => {
+        try{
+            // TODO: hookup to actual API
+            let res = await axios.get('/api/merches/merch_cost')
+            // since api is not hook we will not get here instead goes
+            // to catch block
+            const formattedData =  normalizeChartData(res.data)
+            setPrices(formattedData)
+        } catch(err){
+            console.log(err)
+            console.log(err.response)
+        }
+    }
+    const renderChart =()=> {
+        if(!prices){
+            return <p>loading</p>
+        } else {
+            return (
+                <BarChart width={600} height={300} data={prices}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="price" fill="#82ca9d" />
+              </BarChart>
 
-  data = () => {
-    let { merches } = this.state;
-    return merches.map( merch => {
-      let key = merch.merch;
-      let avg = this.calcAvg(merch.prices, merch.price);
-      return {
-        name: key,
-        [key]: avg,
-        amt: avg
-      }
-    });
-  }
-
-  render() {
-    let { merches } = this.state;
+            )
+        }
+    }
     return (
-      <BarChart 
-        width={600} 
-        height={300} 
-        data={merches.length ? this.data() : []}
-        margin={{top: 5, right: 30, left: 20, bottom: 5}}
-        barGap={0}
-      >
-      <XAxis dataKey="name" />
-      <YAxis />
-      <CartesianGrid strokeDasharray="3 3" />
-      <Tooltip />
-      <Legend />
-      { merches.map( (merch, i) =>
-          <Bar key={merch.merch} dataKey={merch.merch} fill={colors[i]}/>
-        )
-      }
-      </BarChart>
+        <>
+          <h1>Merchandise Price Page</h1>
+           {renderChart()}
+        </>
     )
-  }
-
 }
 
-export default MerchCost;
+export default MerchCost

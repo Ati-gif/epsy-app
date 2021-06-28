@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     get 'sellers', to: 'sellers#index'
     get 'sellers/:id', to: 'sellers#show'
     get 'buyers/:id', to: 'buyers#show'
+    get '/merches/merch_cost', to:'merches#merch_cost'
   end
 end
