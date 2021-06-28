@@ -3,7 +3,7 @@ import AuthProvider, { AuthContext } from "../providers/AuthProvider";
 import { Form, Header } from "semantic-ui-react";
 
 const Register = (props) => {
-  const [email, setEmail] = useState("testy@test.com");
+  const [email, setEmail] = useState("test@gmail.com");
   const [password, setPassword] = useState("123456");
 
   const { handleLogin, loading } = useContext(AuthContext);
