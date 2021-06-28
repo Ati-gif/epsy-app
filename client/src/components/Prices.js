@@ -1,81 +1,69 @@
-import axios from 'axios';
-import React, {useState, useEffect} from 'react'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
+import React from 'react';
+import { Bar } from 'react-chartjs-2';
 
+const data = {
+  labels: ['Toys', 'Crafts', 'Home', 'Accessories', 'Wedding', 'Living'],
+  datasets: [
+    {
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
 
-// This is what my data is going to look like coming back from API
-const apiDummyData = [
-    {merch: 'Toys', prices: "123234,23412,2134123"},
-    {merch: 'Accessories', prices: "223234,23412,134123"},
-    {merch: 'Home', prices: "123234,23412,2134123"},
-    {merch: 'Living', prices: "223234,23412,134123"},
-    {merch: 'Wedding', prices: "123234,23412,2134123"},
-    {merch: 'Entertainment', prices: "223234,23412,134123"},
-    {merch: 'Crafts', prices: "123234,23412,2134123"},
-    ]
+const options = {
+  indexAxis: 'y',
+  // Elements options apply to all of the options unless overridden in a dataset
+  // In this case, we are setting the border of each horizontal bar to be 2px wide
+  elements: {
+    bar: {
+      borderWidth: 2,
+    },
+  },
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'right',
+    },
+    title: {
+      display: true,
+      text: 'Best Sellers',
+    },
+  },
+};
 
-// This is how recharts needs it
-const dummyData =   [
-    { name: "Toys", price: 500000 },
-    { name: "Accessories", price: 250000 },
-    { name: "Home", price: 100000 },
-    { name: "Living", price: 350000 },
-    { name: "Wedding", price: 200000 },
-    { name: "Entertainment", price: 150000 },
-    { name: "Crafts", price: 300000 },
-  ]
+const Prices = () => (
+  <>
+    <div className='header'>
+      <h1 className='title'>Merchandise Weekly Sales</h1>
+      <div className='links'>
+        <a
+          className='btn btn-gh'
+          href='https://github.com/reactchartjs/react-chartjs-2/blob/master/example/src/charts/HorizontalBar.js'
+        >
+          Github Source
+        </a>
+      </div>
+    </div>
+    <Bar data={data} options={options} />
+  </>
+);
 
-  const Prices = () =>{
-      const [prices, setPrices] = useState(null)
-      useEffect(()=>{
-          getPrices()
-        },[])
-        
-        const normalizeChartData = (apiData) => {
-            return apiData.map( merchData => {
-                let pricesArray = merchData.prices.split(',')
-                let sum = pricesArray.reduce((acumm, thing) => acumm += parseInt(thing), 0)
-                let average = sum/pricesArray.length
-          
-                return {name: merchData.merch, price: average.toFixed(2)}
-            })
-        } 
-        
-        const getPrices = async () => {
-        try{
-            // TODO: hookup to actual API
-            let res = await axios.get('/api/merches/prices')
-            // since api is not hook we will not get here instead goes
-            // to catch block
-            const formattedData =  normalizeChartData(res.data)
-            setPrices(formattedData)
-        } catch(err){
-            console.log(err)
-            console.log(err.response)
-        }
-    }
-    const renderChart =()=> {
-        if(!prices){
-            return <p>loading</p>
-        } else {
-            return (
-                <BarChart width={600} height={300} data={prices}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="price" fill="#82ca9d" />
-              </BarChart>
-
-            )
-        }
-    }
-    return (
-        <>
-          <h1>Merchandise Price Page</h1>
-           {renderChart()}
-        </>
-    )
-}
-
-export default Prices
+export default Prices;

@@ -22,7 +22,7 @@ class Api::MerchesController < ApplicationController
     end
     
     def merch_cost
-      render json: Merch.cost_by_category
+      render json: Merch.cost_by_merch
     end
 
   private
