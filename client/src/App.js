@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Available from "./components/Available";
 import AvailableCustom from "./components/AvailableCustom";
 import FindMerch from "./components/FindMerch";
+import MerchCost from "./components/MerchCost";
 import Categories from "./components/Categories";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
             <Route exact path="/available" component={Available} />
             <Route exact path='/available_custom' component={AvailableCustom} />
             <Route exact path='/categories' component={Categories} />
+            <Route exact path ='/merch_cost' component={MerchCost} />
             <Route exact path ='/find_merch' component={FindMerch} />
             <Route component={NoMatch} />
           </Switch>
