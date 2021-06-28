@@ -56,7 +56,7 @@ const Prices = () => (
       <div className='links'>
         <a
           className='btn btn-gh'
-          href='https://github.com/reactchartjs/react-chartjs-2/blob/master/example/src/charts/HorizontalBar.js'
+          href='https://github.com/reactchartjs/react-chartjs-2'
         >
           Github Source
         </a>
