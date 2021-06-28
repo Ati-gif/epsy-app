@@ -5,7 +5,7 @@ const data = {
   labels: ['Toys', 'Crafts', 'Home', 'Accessories', 'Wedding', 'Living'],
   datasets: [
     {
-      label: '# of Votes',
+      label: '# of Sales',
       data: [12, 19, 3, 5, 2, 3],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
